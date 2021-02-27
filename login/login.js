@@ -24,7 +24,6 @@ $("#goto-login").on("click", function() {
 //    2. 密码、重复密码   长度 6~12 位，且不能出现空格：   非空格类字符；\S
 //    3. 密码 和 重复密码 必须一致 
 
-
 form.verify({
   // 长度 6~12 位，且不能出现空格
   changdu: function(value, dom) {
@@ -44,18 +43,11 @@ form.verify({
     }
   },
 
-
-
-
   // 简写：数组[正则、不满足时文字提醒]
   // pass: [
   //   /^[\S]{6,12}$/, '密码必须6到12位，且不能出现空格'
   // ]
 });
-
-
-
-
 
 
 
@@ -89,6 +81,42 @@ $("#register form").on("submit", function(e) {
     }
   })
 
+
+
+});
+
+
+
+// -------------------------------------------登录
+$("#login form").on("submit", function(e) {
+  e.preventDefault();
+
+  // 1.收集数据  JQ  layui.form模块
+  let data = $(this).serialize();
+
+
+  // 2.提交数据
+  $.ajax({
+    url: "http://ajax.frontend.itheima.net/api/login",
+    type: "POST",
+    data: data,
+    success: function(res) {
+      // res.token值设计思路，
+      //   1.比如zs登录；转跳主页index.html
+      //   2.network请求：url; 复制下 为我所用！
+      //   3.要求：主页上所有url请求，必须在请求头携带上token值（当前用户凭证）！确保就是当前用户在使用接口！
+
+      // 代码：
+      //   1. 拿到token:res.token;(应该怎么处理，一会其他地方就可以用？存本地！)
+      //   2. 一会转跳index.html  所有请求要用到token;
+      layer.msg(res.message);
+      if (res.status == 0) {
+        location.href = "../index.html";
+        localStorage.setItem("token", res.token);
+      }
+
+    }
+  })
 
 
 });
