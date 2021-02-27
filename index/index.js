@@ -1,3 +1,5 @@
+let layer = layui.layer;
+
 // **************************************************获取个人信息
 $.ajax({
   url: "http://ajax.frontend.itheima.net/my/userinfo",
@@ -54,3 +56,27 @@ $.ajax({
 
 
 });
+
+
+
+
+// ***************************************************退出
+// 设置：开发过程检查html结构
+//      1.index首页----->所谓回到login.html
+//      2.清空token;
+
+$('#logout').on("click", function() {
+
+  layer.confirm('您确认退出么?', { icon: 3, title: '提示' }, function(index) {
+    layer.close(index);
+
+    // 1.回到login.html
+    location.href = "../login.html";
+
+    // 2.清空token本次存储（？为什么 token管理）
+    localStorage.removeItem("token");
+
+  });
+
+
+})
