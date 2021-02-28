@@ -44,42 +44,43 @@ if (localStorage.getItem("token") == null) {
 
 
 // **************************************************获取个人信息
-$.ajax({
-  url: "/my/userinfo",
-  // type:"get",
-  success: function(res) {
+function getInfo() {
+  $.ajax({
+    url: "/my/userinfo",
+    // type:"get",
+    success: function(res) {
 
-    if (res.status == 0) {
-      // 产品经理设计思路：
-      //      1.名字：优先显示昵称，后则显示用户名！
-      let name = res.data.nickname || res.data.username;
-      $(".username").text(name);
+      if (res.status == 0) {
+        // 产品经理设计思路：
+        //      1.名字：优先显示昵称，后则显示用户名！
+        let name = res.data.nickname || res.data.username;
+        $(".username").text(name);
 
 
 
-      //      2.圆形：优先显示头像，后则显示名字的第一个字！
-      if (res.data.user_pic != null) {
-        // 图片base64图片流：
-        //     好处：直接在HTML页面中，在页面中渲染，减少对服务器请求！
-        //     弊端：处理图片流字符串，把图片大小增加为原来30%；前端HTML加载费劲！
-        //     场景：处理小图；雪碧图；
-        $(".userinfo img").show().css("display", "inline-block").attr("src", res.data.user_pic);
+        //      2.圆形：优先显示头像，后则显示名字的第一个字！
+        if (res.data.user_pic != null) {
+          // 图片base64图片流：
+          //     好处：直接在HTML页面中，在页面中渲染，减少对服务器请求！
+          //     弊端：处理图片流字符串，把图片大小增加为原来30%；前端HTML加载费劲！
+          //     场景：处理小图；雪碧图；
+          $(".userinfo img").show().css("display", "inline-block").attr("src", res.data.user_pic);
 
+        }
+        //      名字第一个字！
+        else {
+          // 1.截取
+          let str = name.substr(0, 1);
+
+          // 2.大写：防止第一个字是英文！
+          str = str.toUpperCase();
+
+          // 3.设置
+          $(".avatar").show().css("display", "inline-block").text(str);
+          //      show方法：给DOM添加行内样式 display: inline;
+          //      需要：单独设置css样式
+        }
       }
-      //      名字第一个字！
-      else {
-        // 1.截取
-        let str = name.substr(0, 1);
-
-        // 2.大写：防止第一个字是英文！
-        str = str.toUpperCase();
-
-        // 3.设置
-        $(".avatar").show().css("display", "inline-block").text(str);
-        //      show方法：给DOM添加行内样式 display: inline;
-        //      需要：单独设置css样式
-      }
-    }
 
 
 
@@ -89,15 +90,17 @@ $.ajax({
 
 
 
-  },
-  // token携带：去公共common.js
-  // token过去验证：去公共common.js
-  // 为什么要去公共common.js？
-  //     因为除了登录和注册外，需要需要请求做这两事件
-  //     这是重复性代码
-  //     单独配置到JS文件内进行维护!
+    },
+    // token携带：去公共common.js
+    // token过去验证：去公共common.js
+    // 为什么要去公共common.js？
+    //     因为除了登录和注册外，需要需要请求做这两事件
+    //     这是重复性代码
+    //     单独配置到JS文件内进行维护!
 
-});
+  });
+}
+getInfo();
 
 
 
