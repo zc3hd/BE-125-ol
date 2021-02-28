@@ -25,7 +25,7 @@ if (localStorage.getItem("token") == null) {
 // 知识：去哪看返回数据？$.ajax complete完成！不是成功！
 //       返回有过期标识数据，也是个成功数据！不再success里面判断！
 //       success：做返回正常数据业务！
-//       complete：处理返回有明显标注数据业务！
+//       complete：处理返回有明显标注token过期的数据业务！
 
 // 代码：index页面内所有请求，都需要通过complete处理过期时间！
 
@@ -38,15 +38,15 @@ if (localStorage.getItem("token") == null) {
 
 
 
+
+
+
+
+
 // **************************************************获取个人信息
 $.ajax({
-  url: "http://ajax.frontend.itheima.net/my/userinfo",
+  url: "/my/userinfo",
   // type:"get",
-  // 没有传参
-  // 设置请求头：
-  headers: {
-    Authorization: localStorage.getItem("token")
-  },
   success: function(res) {
 
     if (res.status == 0) {
@@ -90,21 +90,13 @@ $.ajax({
 
 
   },
-  // index页面内所有请求，都需要通过complete处理过期业务！
-  complete: function(xhr) {
-    // xhr 当前请求xhr实例化  原生
-    let obj = JSON.parse(xhr.responseText);
+  // token携带：去公共common.js
+  // token过去验证：去公共common.js
+  // 为什么要去公共common.js？
+  //     因为除了登录和注册外，需要需要请求做这两事件
+  //     这是重复性代码
+  //     单独配置到JS文件内进行维护!
 
-    // 特别标注："status":1,"message":"身份认证失败！"
-    if (obj.status == 1 && obj.message == "身份认证失败！") {
-      //
-      // 1.回到login.html
-      location.href = "../login.html";
-
-      // 2.同时清除过期token
-      localStorage.removeItem("token");
-    }
-  }
 });
 
 
