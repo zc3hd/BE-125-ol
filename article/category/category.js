@@ -13,7 +13,7 @@ function getList() {
                 <td>${item.name}</td>
                 <td>${item.alias}</td>
                 <td>
-                  <button type="button" class="layui-btn layui-btn-xs btnEdit">编辑</button>
+                  <button type="button" class="layui-btn layui-btn-xs btnEdit" _id=${item.Id} _name=${item.name} _alias=${item.alias}>编辑</button>
                   <button type="button" class="layui-btn layui-btn-xs layui-btn-danger btnDelete" del_id=${item.Id}>删除</button>
                 </td>
               </tr>`;
@@ -130,8 +130,68 @@ $("tbody").on("click", ".btnDelete", function(e) {
         getList();
       }
     }
-  })
+  });
+});
 
 
+
+// ---------------------------------------------------------编辑
+// 步骤：
+//    1.准备编辑HTML结构的字符串：从新增复制过来！
+let edit_str = `<form class="layui-form edit-form" action="" style="margin: 30px; margin-left: 0px;" id="add_form">
+                <div class="layui-form-item">
+                  <label class="layui-form-label">类别名称</label>
+                  <div class="layui-input-block">
+                    <input type="text" name="name" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                  </div>
+                </div>
+                <div class="layui-form-item">
+                  <label class="layui-form-label">类别别名</label>
+                  <div class="layui-input-block">
+                    <input type="text" name="alias" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                  </div>
+                </div>
+                <div class="layui-form-item">
+                  <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">确认修改</button>
+                  </div>
+                </div>
+              </form>`;
+
+
+//    2..注册点击：如何注册？事件委托！弹窗代码
+$("tbody").on("click", ".btnEdit", function() {
+
+
+  layer.open({
+    type: 1,
+    title: '修改类别',
+    area: ['500px', '250px'],
+    content: edit_str,
+
+    // 当弹窗弹出成功时调用这个函数：
+    success: (dom, index) => {
+      // 3.1 表单赋值！
+      //       1.form.val(); 准备数据对象：{需要：获取 点击编辑 对应这条数据 }
+      //       2.对应这条数据：如何获取；删除的时候，id是怎么拿的？
+      //       3.回到渲染地方，设置自定义属性  id  name  别名; (3个)
+
+      console.log(this);
+
+
+
+
+
+
+
+
+
+    }
+  });
 
 });
+
+
+//    3.弹窗成功出现：
+//        3.1 表单赋值！
+//        3.2 注册提交事件：单独封装函数！
