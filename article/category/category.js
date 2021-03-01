@@ -192,15 +192,6 @@ $("tbody").on("click", ".btnEdit", function() {
 
       // 3.2提交数据：提交修改，知道修改的是哪个数据？根据Id;
       editSub(index);
-
-
-
-
-
-
-
-
-
     }
   });
 
