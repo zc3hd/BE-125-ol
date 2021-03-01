@@ -116,7 +116,7 @@ $(".search").on("submit", function(e) {
 
 
   // 2.重新设置data查询条件，重新加载列表 list();
-  data.cate_id = obj.cate_id;
+  data.cate_id = obj.category;
   data.state = obj.state;
   // 业务上设计：带着分类(其他条件)查询列表，从第一页开始；
   data.pagenum = 1;
