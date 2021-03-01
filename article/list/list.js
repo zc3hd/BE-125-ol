@@ -1,5 +1,6 @@
 let laypage = layui.laypage;
 let form = layui.form;
+let layer = layui.layer;
 
 
 // 全局变量：任何地方都可以用！
@@ -121,5 +122,34 @@ $(".search").on("submit", function(e) {
   // 业务上设计：带着分类(其他条件)查询列表，从第一页开始；
   data.pagenum = 1;
   list();
+});
+
+
+
+// **********************************************************************删除
+// 事件委托
+$("tbody").on("click", ".btn_delete", function() {
+
+
+  // 1.获取id
+  let id = $(this).attr("_id");
+
+  // 2.ajax请求，删除后：业务上：从第一页开始重新加载列表
+  layer.confirm('确认删除么?', { icon: 3, title: '提示' }, function(index) {
+    $.ajax({
+      url: "/my/article/delete/" + id,
+      success: function(res) {
+        layer.msg(res.message);
+        if (res.status == 0) {
+
+          data.pagenum = 1;
+          list();
+          layer.close(index);
+        }
+      }
+    })
+
+
+  });
 
 })
