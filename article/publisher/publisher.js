@@ -12,8 +12,14 @@ $.ajax({
 
       $("select").html(str);
 
-      // 重新渲染：更新渲染！
+      // 表单的重新渲染：更新渲染！
       form.render('select');
     }
   }
 })
+
+
+
+// **************************************************2.单独封装JS文件
+// 里面配置：http://tinymce.ax-z.cn/quick-start.php
+initEditor(); // 封装好很多配置

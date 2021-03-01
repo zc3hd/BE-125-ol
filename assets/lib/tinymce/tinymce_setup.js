@@ -34,5 +34,5 @@ function initEditor() {
     //按tab不换行
     nonbreaking_force_tab: true
       //   imageupload_url: '/user/submit-image'
-  })
+  });
 }
