@@ -1,4 +1,6 @@
 let layer = layui.layer;
+// 整个例子：ajax带弹窗班  todolist 
+// 回顾：   todolist面试题，从头敲出来！
 // ******************************************************列表加载
 function getList() {
   $.ajax({
@@ -12,7 +14,7 @@ function getList() {
                 <td>${item.alias}</td>
                 <td>
                   <button type="button" class="layui-btn layui-btn-xs btnEdit">编辑</button>
-                  <button type="button" class="layui-btn layui-btn-xs layui-btn-danger btnDelete">删除</button>
+                  <button type="button" class="layui-btn layui-btn-xs layui-btn-danger btnDelete" del_id=${item.Id}>删除</button>
                 </td>
               </tr>`;
         });
@@ -103,3 +105,33 @@ function addSub(numb) {
 
   });
 }
+
+
+
+// -------------------------------------------------------删除
+// 步骤：
+//    1.注册点击：如何注册？直接给所有删除按钮注册？还是怎么？事件委托！
+//      $(".btnDelete")为什么获取不到？先获取，再渲染！
+
+$("tbody").on("click", ".btnDelete", function(e) {
+
+  //  2.获取对应删除数据id值；
+  //     2.1 回到初始化渲染，删除和id绑定在一起！
+  //     2.2 自定义属性获取，
+  let id = $(this).attr("del_id");
+
+
+  //  3.删除对应数据 看接口文档  /my/article/deletecate/:id 动态接口
+  $.ajax({
+    url: "/my/article/deletecate/" + id,
+    success: function(res) {
+      layer.msg(res.message);
+      if (res.status == 0) {
+        getList();
+      }
+    }
+  })
+
+
+
+});
