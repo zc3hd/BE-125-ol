@@ -64,22 +64,21 @@ function pageRender(total) {
       // first：是第一次加载，还是用户操作！
       // obj：得到操作后：现在是第几页，选择页显示多少个数据
 
-      // 分页器是第一次加载的时候，不需要再次加载列表；
-      if (first == true) {
-        return;
+
+      // 当是用户操作的时候，才重新加载列表
+      if (first == undefined) {
+        // 业务：列表 按照用户的选择(页码2和显示多少条5)重新加载数据！
+        data.pagenum = obj.curr;
+        data.pagesize = obj.limit;
+        list();
       }
-
-      // 业务：列表 按照用户的选择(页码2和显示多少条5)重新加载数据！
-      data.pagenum = obj.curr;
-      data.pagesize = obj.limit;
-      list();
-
 
       // 问题：页码初始化后列表数据一致重新加载！
       // 代码：
       //     1.页码初始化后列表加载完成后，加载pageRender分页器
-      //     2. jump当分页器第一次加载的时候，函数也会执行！
-      //     3.又让列表加载了一次！
+      //     2. 当分页器第一次加载的时候，jump函数也会执行！
+      //     3.jump执行又让列表加载了一次，又算是重新第一次加载！
+      //     4.循环往复
 
     }
 
