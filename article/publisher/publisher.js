@@ -97,7 +97,6 @@ $(".layui-form").on("submit", function(e) {
     fd.append("cover_img", obj);
 
 
-
     // 提交数据:FormData传参方式！
     $.ajax({
       url: "/my/article/add",
@@ -105,16 +104,20 @@ $(".layui-form").on("submit", function(e) {
       data: fd,
       processData: false,
       contentType: false,
-      success: function(res) {}
+      success: function(res) {
+        layer.msg(res.message)
+
+
+        // 产品设计：页面转跳文章列表页面
+        if (res.status == 0) {
+          let a_list = window.parent.document.querySelector(".my_list");
+          a_list.click(); // 模拟a点击行为
+        }
+
+      }
     })
 
   });
-
-
-
-
-
-
 
 
 })
