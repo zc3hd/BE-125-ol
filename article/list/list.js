@@ -21,6 +21,8 @@ function list() {
 
         // ************************列表渲染
         let str = "";
+
+        // <button type="button" class="layui-btn layui-btn-xs btn_edit" _id="${item.Id}">编辑</button>
         res.data.forEach(item => {
           str += `<tr>
                 <td>${item.title}</td>
@@ -28,7 +30,7 @@ function list() {
                 <td>${item.pub_date}</td>
                 <td>${item.state}</td>
                 <td>
-                  <button type="button" class="layui-btn layui-btn-xs btn_edit" _id="${item.Id}">编辑</button>
+                  <a href="/article/edit/edit.html?id=${item.Id}" class="layui-btn layui-btn-xs">编辑</a>
                   <button type="button" class="layui-btn layui-btn-danger layui-btn-xs btn_delete" _id="${item.Id}">删除</button>
                 </td>
               </tr>`;
@@ -130,7 +132,6 @@ $(".search").on("submit", function(e) {
 // 事件委托
 $("tbody").on("click", ".btn_delete", function() {
 
-
   // 1.获取id
   let id = $(this).attr("_id");
 
@@ -148,7 +149,6 @@ $("tbody").on("click", ".btn_delete", function() {
         }
       }
     })
-
 
   });
 
